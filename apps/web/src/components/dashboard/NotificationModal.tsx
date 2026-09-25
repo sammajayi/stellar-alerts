@@ -35,7 +35,7 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      void checkMFAStatus();
+      checkMFAStatus();
     }
   }, [isOpen]);
 

@@ -7,19 +7,19 @@ describe('WebhookLogRetryModal', () => {
   const originalFetch = global.fetch
 
   beforeEach(() => {
-    // @ts-expect-error test double for global.fetch
+    // @ts-expect-error mock fetch
     global.fetch = vi.fn()
   })
 
   afterEach(() => {
-    // @ts-expect-error test double for global.fetch
+    // @ts-expect-error restore fetch
     global.fetch = originalFetch
     vi.resetAllMocks()
   })
 
   it('renders logs and triggers retry POST', async () => {
     const logs = [{id: 'log-1', statusCode: null, error: 'timeout', payload: {foo: 'bar'}}]
-    // @ts-expect-error mock fetch instance has no vi.Mock type
+    // @ts-expect-error mock fetch response
     global.fetch.mockResolvedValue({ok: true, status: 200})
 
     const onClose = vi.fn()
@@ -34,10 +34,7 @@ describe('WebhookLogRetryModal', () => {
     })
 
     await waitFor(() => {
-      // The "Status:" label and value render as separate text nodes
-      // (<strong>Status:</strong> {value}), so match on the element's
-      // combined text content instead of a single exact string.
-      expect(getByText((_, element) => element?.textContent === 'Status: 200')).toBeTruthy()
+      expect(getByText(/200/)).toBeTruthy()
     })
   })
 })

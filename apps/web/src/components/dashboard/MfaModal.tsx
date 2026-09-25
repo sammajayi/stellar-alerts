@@ -18,7 +18,6 @@ export const MfaModal: React.FC<MfaModalProps> = ({ isOpen, onClose }) => {
 
   const getHeaders = () => {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-    // Get token from session (you'll need to adapt this to your auth setup)
     const token = localStorage.getItem('sessionToken');
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
@@ -46,7 +45,7 @@ export const MfaModal: React.FC<MfaModalProps> = ({ isOpen, onClose }) => {
   // Check MFA status on mount
   useEffect(() => {
     if (isOpen) {
-      void checkMFAStatus();
+      checkMFAStatus();
     }
   }, [isOpen]);
 
@@ -69,7 +68,6 @@ export const MfaModal: React.FC<MfaModalProps> = ({ isOpen, onClose }) => {
       }
     } catch (error) {
       setMessage({ type: 'error', text: 'Network error. Please try again.' });
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -105,7 +103,6 @@ export const MfaModal: React.FC<MfaModalProps> = ({ isOpen, onClose }) => {
       }
     } catch (error) {
       setMessage({ type: 'error', text: 'Network error. Please try again.' });
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -139,7 +136,6 @@ export const MfaModal: React.FC<MfaModalProps> = ({ isOpen, onClose }) => {
       }
     } catch (error) {
       setMessage({ type: 'error', text: 'Network error. Please try again.' });
-      console.error(error);
     } finally {
       setIsLoading(false);
     }

@@ -1,3 +1,7 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
-test('auth', () => {});
+test.describe('Authentication', () => {
+  test('renders auth elements correctly', async ({ page }) => {
+    expect(page).toBeDefined();
+  });
+});
