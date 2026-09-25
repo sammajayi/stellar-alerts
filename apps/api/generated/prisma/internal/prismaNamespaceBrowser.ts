@@ -53,12 +53,13 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Wallet: 'Wallet',
-  IngestionCursor: 'IngestionCursor',
-  Payment: 'Payment',
-  NotificationPreference: 'NotificationPreference',
   AlertRule: 'AlertRule',
   AlertRuleDispatchLog: 'AlertRuleDispatchLog',
   WhatsAppDeliveryLog: 'WhatsAppDeliveryLog',
+  MfaRecoveryCode: 'MfaRecoveryCode',
+  IngestionCursor: 'IngestionCursor',
+  Payment: 'Payment',
+  NotificationPreference: 'NotificationPreference',
   Webhook: 'Webhook',
   WebhookLog: 'WebhookLog',
   WebhookCircuitBreaker: 'WebhookCircuitBreaker',
@@ -76,8 +77,8 @@ export const ModelName = {
   SorobanTopicIndexCursor: 'SorobanTopicIndexCursor',
   DexSwapEvent: 'DexSwapEvent',
   SecurityAuditLog: 'SecurityAuditLog',
-  NotificationDelivery: 'NotificationDelivery',
   NotificationDeliveryAttempt: 'NotificationDeliveryAttempt',
+  NotificationDelivery: 'NotificationDelivery',
   DeadLetter: 'DeadLetter',
   DeadLetterAudit: 'DeadLetterAudit',
   RefreshSession: 'RefreshSession',
@@ -120,6 +121,59 @@ export const WalletScalarFieldEnum = {
 } as const
 
 export type WalletScalarFieldEnum = (typeof WalletScalarFieldEnum)[keyof typeof WalletScalarFieldEnum]
+
+
+export const AlertRuleScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  walletId: 'walletId',
+  name: 'name',
+  assets: 'assets',
+  minAmount: 'minAmount',
+  conditions: 'conditions',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AlertRuleScalarFieldEnum = (typeof AlertRuleScalarFieldEnum)[keyof typeof AlertRuleScalarFieldEnum]
+
+
+export const AlertRuleDispatchLogScalarFieldEnum = {
+  id: 'id',
+  paymentId: 'paymentId',
+  matchedRuleIds: 'matchedRuleIds',
+  createdAt: 'createdAt'
+} as const
+
+export type AlertRuleDispatchLogScalarFieldEnum = (typeof AlertRuleDispatchLogScalarFieldEnum)[keyof typeof AlertRuleDispatchLogScalarFieldEnum]
+
+
+export const WhatsAppDeliveryLogScalarFieldEnum = {
+  id: 'id',
+  paymentId: 'paymentId',
+  toNumber: 'toNumber',
+  success: 'success',
+  messageSid: 'messageSid',
+  status: 'status',
+  error: 'error',
+  attempts: 'attempts',
+  sentAt: 'sentAt'
+} as const
+
+export type WhatsAppDeliveryLogScalarFieldEnum = (typeof WhatsAppDeliveryLogScalarFieldEnum)[keyof typeof WhatsAppDeliveryLogScalarFieldEnum]
+
+
+export const MfaRecoveryCodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  codeHash: 'codeHash',
+  used: 'used',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type MfaRecoveryCodeScalarFieldEnum = (typeof MfaRecoveryCodeScalarFieldEnum)[keyof typeof MfaRecoveryCodeScalarFieldEnum]
 
 
 export const IngestionCursorScalarFieldEnum = {
@@ -168,47 +222,6 @@ export const NotificationPreferenceScalarFieldEnum = {
 } as const
 
 export type NotificationPreferenceScalarFieldEnum = (typeof NotificationPreferenceScalarFieldEnum)[keyof typeof NotificationPreferenceScalarFieldEnum]
-
-
-export const AlertRuleScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  walletId: 'walletId',
-  name: 'name',
-  assets: 'assets',
-  minAmount: 'minAmount',
-  conditions: 'conditions',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type AlertRuleScalarFieldEnum = (typeof AlertRuleScalarFieldEnum)[keyof typeof AlertRuleScalarFieldEnum]
-
-
-export const AlertRuleDispatchLogScalarFieldEnum = {
-  id: 'id',
-  paymentId: 'paymentId',
-  matchedRuleIds: 'matchedRuleIds',
-  createdAt: 'createdAt'
-} as const
-
-export type AlertRuleDispatchLogScalarFieldEnum = (typeof AlertRuleDispatchLogScalarFieldEnum)[keyof typeof AlertRuleDispatchLogScalarFieldEnum]
-
-
-export const WhatsAppDeliveryLogScalarFieldEnum = {
-  id: 'id',
-  paymentId: 'paymentId',
-  toNumber: 'toNumber',
-  success: 'success',
-  messageSid: 'messageSid',
-  status: 'status',
-  error: 'error',
-  attempts: 'attempts',
-  sentAt: 'sentAt'
-} as const
-
-export type WhatsAppDeliveryLogScalarFieldEnum = (typeof WhatsAppDeliveryLogScalarFieldEnum)[keyof typeof WhatsAppDeliveryLogScalarFieldEnum]
 
 
 export const WebhookScalarFieldEnum = {
@@ -449,6 +462,25 @@ export const SecurityAuditLogScalarFieldEnum = {
 export type SecurityAuditLogScalarFieldEnum = (typeof SecurityAuditLogScalarFieldEnum)[keyof typeof SecurityAuditLogScalarFieldEnum]
 
 
+export const NotificationDeliveryAttemptScalarFieldEnum = {
+  id: 'id',
+  deliveryKey: 'deliveryKey',
+  deliveryId: 'deliveryId',
+  paymentId: 'paymentId',
+  channel: 'channel',
+  destination: 'destination',
+  providerRequestId: 'providerRequestId',
+  status: 'status',
+  attempt: 'attempt',
+  error: 'error',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationDeliveryAttemptScalarFieldEnum = (typeof NotificationDeliveryAttemptScalarFieldEnum)[keyof typeof NotificationDeliveryAttemptScalarFieldEnum]
+
+
 export const NotificationDeliveryScalarFieldEnum = {
   id: 'id',
   deliveryKey: 'deliveryKey',
@@ -467,25 +499,6 @@ export const NotificationDeliveryScalarFieldEnum = {
 } as const
 
 export type NotificationDeliveryScalarFieldEnum = (typeof NotificationDeliveryScalarFieldEnum)[keyof typeof NotificationDeliveryScalarFieldEnum]
-
-
-export const NotificationDeliveryAttemptScalarFieldEnum = {
-  id: 'id',
-  deliveryKey: 'deliveryKey',
-  deliveryId: 'deliveryId',
-  paymentId: 'paymentId',
-  channel: 'channel',
-  destination: 'destination',
-  providerRequestId: 'providerRequestId',
-  status: 'status',
-  attempt: 'attempt',
-  error: 'error',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type NotificationDeliveryAttemptScalarFieldEnum = (typeof NotificationDeliveryAttemptScalarFieldEnum)[keyof typeof NotificationDeliveryAttemptScalarFieldEnum]
 
 
 export const DeadLetterScalarFieldEnum = {

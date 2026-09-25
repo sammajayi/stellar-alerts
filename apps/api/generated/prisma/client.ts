@@ -50,21 +50,6 @@ export type User = Prisma.UserModel
  */
 export type Wallet = Prisma.WalletModel
 /**
- * Model IngestionCursor
- * 
- */
-export type IngestionCursor = Prisma.IngestionCursorModel
-/**
- * Model Payment
- * 
- */
-export type Payment = Prisma.PaymentModel
-/**
- * Model NotificationPreference
- * 
- */
-export type NotificationPreference = Prisma.NotificationPreferenceModel
-/**
  * Model AlertRule
  * 
  */
@@ -79,6 +64,26 @@ export type AlertRuleDispatchLog = Prisma.AlertRuleDispatchLogModel
  * 
  */
 export type WhatsAppDeliveryLog = Prisma.WhatsAppDeliveryLogModel
+/**
+ * Model MfaRecoveryCode
+ * 
+ */
+export type MfaRecoveryCode = Prisma.MfaRecoveryCodeModel
+/**
+ * Model IngestionCursor
+ * 
+ */
+export type IngestionCursor = Prisma.IngestionCursorModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
+/**
+ * Model NotificationPreference
+ * 
+ */
+export type NotificationPreference = Prisma.NotificationPreferenceModel
 /**
  * Model Webhook
  * 
@@ -165,15 +170,15 @@ export type DexSwapEvent = Prisma.DexSwapEventModel
  */
 export type SecurityAuditLog = Prisma.SecurityAuditLogModel
 /**
- * Model NotificationDelivery
- * 
- */
-export type NotificationDelivery = Prisma.NotificationDeliveryModel
-/**
  * Model NotificationDeliveryAttempt
  * 
  */
 export type NotificationDeliveryAttempt = Prisma.NotificationDeliveryAttemptModel
+/**
+ * Model NotificationDelivery
+ * 
+ */
+export type NotificationDelivery = Prisma.NotificationDeliveryModel
 /**
  * Model DeadLetter
  * 

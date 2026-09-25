@@ -381,6 +381,10 @@ export type MfaRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.MfaRecoveryCodeScalarWhereInput | Prisma.MfaRecoveryCodeScalarWhereInput[]
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type MfaRecoveryCodeCreateWithoutUserInput = {
   id?: string
   codeHash: string

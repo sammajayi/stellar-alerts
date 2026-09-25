@@ -20,9 +20,12 @@ model User {
   multisigSignerWatches MultisigSignerWatcher[]
   anchorWatches         AnchorTransactionWatch[]
   dexSwapWatches        DexSwapWatch[]
+  alertRules            AlertRule[]
   deliveryAttempts NotificationDeliveryAttempt[]
   deadLetters        DeadLetter[]
+  mfaRecoveryCodes   MfaRecoveryCode[]
   refreshSessions    RefreshSession[]
+  notificationDeliveries NotificationDelivery[]
 }
 
 model Wallet {
@@ -34,6 +37,62 @@ model Wallet {
   createdAt   DateTime         @default(now())
   payments   Payment[]
   cursor     IngestionCursor?
+  alertRules AlertRule[]
+}
+
+model AlertRule {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Scopes the rule to one wallet; null applies it across all of the user's wallets.
+  walletId   String?
+  wallet     Wallet?   @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  name       String?
+  // Asset codes this rule matches; empty array means "any asset".
+  assets     String[]  @default([])
+  minAmount  Decimal?
+  // Optional FilterRuleGroup JSON for AND/OR-grouped conditions beyond asset/minAmount.
+  conditions Json?
+  isActive   Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([walletId])
+}
+
+model AlertRuleDispatchLog {
+  id             String   @id @default(cuid())
+  paymentId      String   @unique
+  matchedRuleIds Json
+  createdAt      DateTime @default(now())
+}
+
+model WhatsAppDeliveryLog {
+  id         String   @id @default(cuid())
+  paymentId  String
+  toNumber   String
+  success    Boolean
+  messageSid String?
+  status     String?
+  error      String?
+  attempts   Int      @default(1)
+  sentAt     DateTime @default(now())
+
+  @@index([paymentId])
+}
+
+model MfaRecoveryCode {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  codeHash  String
+  used      Boolean   @default(false)
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+  @@index([codeHash])
 }
 
 model IngestionCursor {
@@ -67,6 +126,7 @@ model Payment {
   createdAt   DateTime @default(now())
   deliveryAttempts NotificationDeliveryAttempt[]
   deadLetters       DeadLetter[]
+  notificationDeliveries NotificationDelivery[]
 
   @@index([txHash])
   @@index([receivedAt])
@@ -402,25 +462,58 @@ model SecurityAuditLog {
 // Idempotency rule: a delivery is NEVER dispatched twice while an earlier
 // attempt for the same `deliveryKey` is in `delivered` state.
 model NotificationDeliveryAttempt {
-  id                String   @id @default(cuid())
+  id                String              @id @default(cuid())
   deliveryKey       String
+  deliveryId        String?
+  delivery          NotificationDelivery? @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
   paymentId         String?
-  payment           Payment? @relation(fields: [paymentId], references: [id], onDelete: SetNull)
+  payment           Payment?            @relation(fields: [paymentId], references: [id], onDelete: SetNull)
   channel           String
   destination       String?
   providerRequestId String?
-  status            String   @default("pending") // pending | delivered | failed | skipped | suppressed
-  attempt           Int      @default(1)
+  status            String              @default("pending") // pending | delivered | failed | skipped | suppressed
+  attempt           Int                 @default(1)
   error             String?
   userId            String?
-  user              User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  user              User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
 
+  @@unique([deliveryKey, attempt])
   @@index([deliveryKey])
+  @@index([deliveryId])
   @@index([channel])
   @@index([status])
   @@index([paymentId])
+  @@index([createdAt])
+}
+
+// Parent record for a single notification's delivery lifecycle: one
+// NotificationDelivery per (paymentId, channel, destination), with each
+// retry recorded as a child NotificationDeliveryAttempt (#306).
+model NotificationDelivery {
+  id             String   @id @default(cuid())
+  deliveryKey    String   @unique
+  paymentId      String
+  payment        Payment  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  channel        String
+  destination    String
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  status         String   @default("pending")
+  currentAttempt Int      @default(0)
+  maxAttempts    Int      @default(5)
+  lastError      String?
+  deliveredAt    DateTime?
+  terminalAt     DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  attempts       NotificationDeliveryAttempt[]
+
+  @@unique([paymentId, channel, destination])
+  @@index([status])
+  @@index([channel])
+  @@index([userId])
   @@index([createdAt])
 }
 

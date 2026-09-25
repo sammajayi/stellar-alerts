@@ -338,14 +338,14 @@ export type WalletMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
 }
 
-export type WalletScalarRelationFilter = {
-  is?: Prisma.WalletWhereInput
-  isNot?: Prisma.WalletWhereInput
-}
-
 export type WalletNullableScalarRelationFilter = {
   is?: Prisma.WalletWhereInput | null
   isNot?: Prisma.WalletWhereInput | null
+}
+
+export type WalletScalarRelationFilter = {
+  is?: Prisma.WalletWhereInput
+  isNot?: Prisma.WalletWhereInput
 }
 
 export type WalletCreateNestedManyWithoutUserInput = {
@@ -390,6 +390,22 @@ export type WalletUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.WalletScalarWhereInput | Prisma.WalletScalarWhereInput[]
 }
 
+export type WalletCreateNestedOneWithoutAlertRulesInput = {
+  create?: Prisma.XOR<Prisma.WalletCreateWithoutAlertRulesInput, Prisma.WalletUncheckedCreateWithoutAlertRulesInput>
+  connectOrCreate?: Prisma.WalletCreateOrConnectWithoutAlertRulesInput
+  connect?: Prisma.WalletWhereUniqueInput
+}
+
+export type WalletUpdateOneWithoutAlertRulesNestedInput = {
+  create?: Prisma.XOR<Prisma.WalletCreateWithoutAlertRulesInput, Prisma.WalletUncheckedCreateWithoutAlertRulesInput>
+  connectOrCreate?: Prisma.WalletCreateOrConnectWithoutAlertRulesInput
+  upsert?: Prisma.WalletUpsertWithoutAlertRulesInput
+  disconnect?: Prisma.WalletWhereInput | boolean
+  delete?: Prisma.WalletWhereInput | boolean
+  connect?: Prisma.WalletWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WalletUpdateToOneWithWhereWithoutAlertRulesInput, Prisma.WalletUpdateWithoutAlertRulesInput>, Prisma.WalletUncheckedUpdateWithoutAlertRulesInput>
+}
+
 export type WalletCreateNestedOneWithoutCursorInput = {
   create?: Prisma.XOR<Prisma.WalletCreateWithoutCursorInput, Prisma.WalletUncheckedCreateWithoutCursorInput>
   connectOrCreate?: Prisma.WalletCreateOrConnectWithoutCursorInput
@@ -416,22 +432,6 @@ export type WalletUpdateOneRequiredWithoutPaymentsNestedInput = {
   upsert?: Prisma.WalletUpsertWithoutPaymentsInput
   connect?: Prisma.WalletWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.WalletUpdateToOneWithWhereWithoutPaymentsInput, Prisma.WalletUpdateWithoutPaymentsInput>, Prisma.WalletUncheckedUpdateWithoutPaymentsInput>
-}
-
-export type WalletCreateNestedOneWithoutAlertRulesInput = {
-  create?: Prisma.XOR<Prisma.WalletCreateWithoutAlertRulesInput, Prisma.WalletUncheckedCreateWithoutAlertRulesInput>
-  connectOrCreate?: Prisma.WalletCreateOrConnectWithoutAlertRulesInput
-  connect?: Prisma.WalletWhereUniqueInput
-}
-
-export type WalletUpdateOneWithoutAlertRulesNestedInput = {
-  create?: Prisma.XOR<Prisma.WalletCreateWithoutAlertRulesInput, Prisma.WalletUncheckedCreateWithoutAlertRulesInput>
-  connectOrCreate?: Prisma.WalletCreateOrConnectWithoutAlertRulesInput
-  upsert?: Prisma.WalletUpsertWithoutAlertRulesInput
-  disconnect?: Prisma.WalletWhereInput | boolean
-  delete?: Prisma.WalletWhereInput | boolean
-  connect?: Prisma.WalletWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.WalletUpdateToOneWithWhereWithoutAlertRulesInput, Prisma.WalletUpdateWithoutAlertRulesInput>, Prisma.WalletUncheckedUpdateWithoutAlertRulesInput>
 }
 
 export type WalletCreateWithoutUserInput = {
@@ -489,6 +489,62 @@ export type WalletScalarWhereInput = {
   publicKey?: Prisma.StringFilter<"Wallet"> | string
   label?: Prisma.StringNullableFilter<"Wallet"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Wallet"> | Date | string
+}
+
+export type WalletCreateWithoutAlertRulesInput = {
+  id?: string
+  publicKey: string
+  label?: string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutWalletsInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutWalletInput
+  cursor?: Prisma.IngestionCursorCreateNestedOneWithoutWalletInput
+}
+
+export type WalletUncheckedCreateWithoutAlertRulesInput = {
+  id?: string
+  userId: string
+  publicKey: string
+  label?: string | null
+  createdAt?: Date | string
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutWalletInput
+  cursor?: Prisma.IngestionCursorUncheckedCreateNestedOneWithoutWalletInput
+}
+
+export type WalletCreateOrConnectWithoutAlertRulesInput = {
+  where: Prisma.WalletWhereUniqueInput
+  create: Prisma.XOR<Prisma.WalletCreateWithoutAlertRulesInput, Prisma.WalletUncheckedCreateWithoutAlertRulesInput>
+}
+
+export type WalletUpsertWithoutAlertRulesInput = {
+  update: Prisma.XOR<Prisma.WalletUpdateWithoutAlertRulesInput, Prisma.WalletUncheckedUpdateWithoutAlertRulesInput>
+  create: Prisma.XOR<Prisma.WalletCreateWithoutAlertRulesInput, Prisma.WalletUncheckedCreateWithoutAlertRulesInput>
+  where?: Prisma.WalletWhereInput
+}
+
+export type WalletUpdateToOneWithWhereWithoutAlertRulesInput = {
+  where?: Prisma.WalletWhereInput
+  data: Prisma.XOR<Prisma.WalletUpdateWithoutAlertRulesInput, Prisma.WalletUncheckedUpdateWithoutAlertRulesInput>
+}
+
+export type WalletUpdateWithoutAlertRulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutWalletsNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutWalletNestedInput
+  cursor?: Prisma.IngestionCursorUpdateOneWithoutWalletNestedInput
+}
+
+export type WalletUncheckedUpdateWithoutAlertRulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutWalletNestedInput
+  cursor?: Prisma.IngestionCursorUncheckedUpdateOneWithoutWalletNestedInput
 }
 
 export type WalletCreateWithoutCursorInput = {
@@ -601,62 +657,6 @@ export type WalletUncheckedUpdateWithoutPaymentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cursor?: Prisma.IngestionCursorUncheckedUpdateOneWithoutWalletNestedInput
   alertRules?: Prisma.AlertRuleUncheckedUpdateManyWithoutWalletNestedInput
-}
-
-export type WalletCreateWithoutAlertRulesInput = {
-  id?: string
-  publicKey: string
-  label?: string | null
-  createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutWalletsInput
-  payments?: Prisma.PaymentCreateNestedManyWithoutWalletInput
-  cursor?: Prisma.IngestionCursorCreateNestedOneWithoutWalletInput
-}
-
-export type WalletUncheckedCreateWithoutAlertRulesInput = {
-  id?: string
-  userId: string
-  publicKey: string
-  label?: string | null
-  createdAt?: Date | string
-  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutWalletInput
-  cursor?: Prisma.IngestionCursorUncheckedCreateNestedOneWithoutWalletInput
-}
-
-export type WalletCreateOrConnectWithoutAlertRulesInput = {
-  where: Prisma.WalletWhereUniqueInput
-  create: Prisma.XOR<Prisma.WalletCreateWithoutAlertRulesInput, Prisma.WalletUncheckedCreateWithoutAlertRulesInput>
-}
-
-export type WalletUpsertWithoutAlertRulesInput = {
-  update: Prisma.XOR<Prisma.WalletUpdateWithoutAlertRulesInput, Prisma.WalletUncheckedUpdateWithoutAlertRulesInput>
-  create: Prisma.XOR<Prisma.WalletCreateWithoutAlertRulesInput, Prisma.WalletUncheckedCreateWithoutAlertRulesInput>
-  where?: Prisma.WalletWhereInput
-}
-
-export type WalletUpdateToOneWithWhereWithoutAlertRulesInput = {
-  where?: Prisma.WalletWhereInput
-  data: Prisma.XOR<Prisma.WalletUpdateWithoutAlertRulesInput, Prisma.WalletUncheckedUpdateWithoutAlertRulesInput>
-}
-
-export type WalletUpdateWithoutAlertRulesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
-  label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutWalletsNestedInput
-  payments?: Prisma.PaymentUpdateManyWithoutWalletNestedInput
-  cursor?: Prisma.IngestionCursorUpdateOneWithoutWalletNestedInput
-}
-
-export type WalletUncheckedUpdateWithoutAlertRulesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
-  label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payments?: Prisma.PaymentUncheckedUpdateManyWithoutWalletNestedInput
-  cursor?: Prisma.IngestionCursorUncheckedUpdateOneWithoutWalletNestedInput
 }
 
 export type WalletCreateManyUserInput = {

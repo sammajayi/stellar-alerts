@@ -396,8 +396,8 @@ export type NotificationDeliveryCreateInput = {
   terminalAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  payment: Prisma.PaymentCreateNestedOneWithoutDeliveriesInput
-  user?: Prisma.UserCreateNestedOneWithoutDeliveriesInput
+  payment: Prisma.PaymentCreateNestedOneWithoutNotificationDeliveriesInput
+  user?: Prisma.UserCreateNestedOneWithoutNotificationDeliveriesInput
   attempts?: Prisma.NotificationDeliveryAttemptCreateNestedManyWithoutDeliveryInput
 }
 
@@ -432,8 +432,8 @@ export type NotificationDeliveryUpdateInput = {
   terminalAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payment?: Prisma.PaymentUpdateOneRequiredWithoutDeliveriesNestedInput
-  user?: Prisma.UserUpdateOneWithoutDeliveriesNestedInput
+  payment?: Prisma.PaymentUpdateOneRequiredWithoutNotificationDeliveriesNestedInput
+  user?: Prisma.UserUpdateOneWithoutNotificationDeliveriesNestedInput
   attempts?: Prisma.NotificationDeliveryAttemptUpdateManyWithoutDeliveryNestedInput
 }
 
@@ -514,6 +514,11 @@ export type NotificationDeliveryOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type NotificationDeliveryNullableScalarRelationFilter = {
+  is?: Prisma.NotificationDeliveryWhereInput | null
+  isNot?: Prisma.NotificationDeliveryWhereInput | null
+}
+
 export type NotificationDeliveryPaymentIdChannelDestinationCompoundUniqueInput = {
   paymentId: string
   channel: string
@@ -579,11 +584,6 @@ export type NotificationDeliveryMinOrderByAggregateInput = {
 export type NotificationDeliverySumOrderByAggregateInput = {
   currentAttempt?: Prisma.SortOrder
   maxAttempts?: Prisma.SortOrder
-}
-
-export type NotificationDeliveryNullableScalarRelationFilter = {
-  is?: Prisma.NotificationDeliveryWhereInput | null
-  isNot?: Prisma.NotificationDeliveryWhereInput | null
 }
 
 export type NotificationDeliveryCreateNestedManyWithoutUserInput = {
@@ -699,7 +699,7 @@ export type NotificationDeliveryCreateWithoutUserInput = {
   terminalAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  payment: Prisma.PaymentCreateNestedOneWithoutDeliveriesInput
+  payment: Prisma.PaymentCreateNestedOneWithoutNotificationDeliveriesInput
   attempts?: Prisma.NotificationDeliveryAttemptCreateNestedManyWithoutDeliveryInput
 }
 
@@ -779,7 +779,7 @@ export type NotificationDeliveryCreateWithoutPaymentInput = {
   terminalAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  user?: Prisma.UserCreateNestedOneWithoutDeliveriesInput
+  user?: Prisma.UserCreateNestedOneWithoutNotificationDeliveriesInput
   attempts?: Prisma.NotificationDeliveryAttemptCreateNestedManyWithoutDeliveryInput
 }
 
@@ -839,8 +839,8 @@ export type NotificationDeliveryCreateWithoutAttemptsInput = {
   terminalAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  payment: Prisma.PaymentCreateNestedOneWithoutDeliveriesInput
-  user?: Prisma.UserCreateNestedOneWithoutDeliveriesInput
+  payment: Prisma.PaymentCreateNestedOneWithoutNotificationDeliveriesInput
+  user?: Prisma.UserCreateNestedOneWithoutNotificationDeliveriesInput
 }
 
 export type NotificationDeliveryUncheckedCreateWithoutAttemptsInput = {
@@ -889,8 +889,8 @@ export type NotificationDeliveryUpdateWithoutAttemptsInput = {
   terminalAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payment?: Prisma.PaymentUpdateOneRequiredWithoutDeliveriesNestedInput
-  user?: Prisma.UserUpdateOneWithoutDeliveriesNestedInput
+  payment?: Prisma.PaymentUpdateOneRequiredWithoutNotificationDeliveriesNestedInput
+  user?: Prisma.UserUpdateOneWithoutNotificationDeliveriesNestedInput
 }
 
 export type NotificationDeliveryUncheckedUpdateWithoutAttemptsInput = {
@@ -939,7 +939,7 @@ export type NotificationDeliveryUpdateWithoutUserInput = {
   terminalAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payment?: Prisma.PaymentUpdateOneRequiredWithoutDeliveriesNestedInput
+  payment?: Prisma.PaymentUpdateOneRequiredWithoutNotificationDeliveriesNestedInput
   attempts?: Prisma.NotificationDeliveryAttemptUpdateManyWithoutDeliveryNestedInput
 }
 
@@ -1005,7 +1005,7 @@ export type NotificationDeliveryUpdateWithoutPaymentInput = {
   terminalAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneWithoutDeliveriesNestedInput
+  user?: Prisma.UserUpdateOneWithoutNotificationDeliveriesNestedInput
   attempts?: Prisma.NotificationDeliveryAttemptUpdateManyWithoutDeliveryNestedInput
 }
 
